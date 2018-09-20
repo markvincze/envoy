@@ -343,10 +343,10 @@ private:
  */
 class LeastRequestFullLoadBalancer : public EdfLoadBalancerBase {
 public:
-  LeastRequestFullLoadBalancer(const PrioritySet& priority_set, const PrioritySet* local_priority_set,
-                           ClusterStats& stats, Runtime::Loader& runtime,
-                           Runtime::RandomGenerator& random,
-                           const envoy::api::v2::Cluster::CommonLbConfig& common_config)
+  LeastRequestFullLoadBalancer(const PrioritySet& priority_set,
+                               const PrioritySet* local_priority_set, ClusterStats& stats,
+                               Runtime::Loader& runtime, Runtime::RandomGenerator& random,
+                               const envoy::api::v2::Cluster::CommonLbConfig& common_config)
       : EdfLoadBalancerBase(priority_set, local_priority_set, stats, runtime, random,
                             common_config) {
     initialize();

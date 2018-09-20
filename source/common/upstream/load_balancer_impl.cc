@@ -517,10 +517,10 @@ HostConstSharedPtr LeastRequestLoadBalancer::unweightedHostPick(const HostVector
 
 HostConstSharedPtr LeastRequestFullLoadBalancer::unweightedHostPick(const HostVector& hosts_to_use,
                                                                     const HostsSource&) {
-  return *std::min_element(
-    hosts_to_use.begin(),
-    hosts_to_use.end(),
-    [](const HostSharedPtr& a, const HostSharedPtr& b) { return a->stats().rq_active_.value() < b->stats().rq_active_.value(); });
+  return *std::min_element(hosts_to_use.begin(), hosts_to_use.end(),
+                           [](const HostSharedPtr& a, const HostSharedPtr& b) {
+                             return a->stats().rq_active_.value() < b->stats().rq_active_.value();
+                           });
 }
 
 HostConstSharedPtr RandomLoadBalancer::chooseHost(LoadBalancerContext*) {

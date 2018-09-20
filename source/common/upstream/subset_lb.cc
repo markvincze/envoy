@@ -437,8 +437,8 @@ SubsetLoadBalancer::PrioritySubsetImpl::PrioritySubsetImpl(const SubsetLoadBalan
 
   case LoadBalancerType::LeastRequestFull:
     lb_.reset(new LeastRequestFullLoadBalancer(*this, subset_lb.original_local_priority_set_,
-                                               subset_lb.stats_, subset_lb.runtime_, subset_lb.random_,
-                                               subset_lb.common_config_));
+                                               subset_lb.stats_, subset_lb.runtime_,
+                                               subset_lb.random_, subset_lb.common_config_));
     break;
 
   case LoadBalancerType::Random:
