@@ -339,6 +339,29 @@ private:
 };
 
 /**
+ * Least Request Full Scan load balancer.
+ */
+class LeastRequestFullLoadBalancer : public EdfLoadBalancerBase {
+public:
+  LeastRequestFullLoadBalancer(const PrioritySet& priority_set, const PrioritySet* local_priority_set,
+                           ClusterStats& stats, Runtime::Loader& runtime,
+                           Runtime::RandomGenerator& random,
+                           const envoy::api::v2::Cluster::CommonLbConfig& common_config)
+      : EdfLoadBalancerBase(priority_set, local_priority_set, stats, runtime, random,
+                            common_config) {
+    initialize();
+  }
+
+private:
+  void refreshHostSource(const HostsSource&) override {}
+  double hostWeight(const Host& host) override {
+    return static_cast<double>(host.weight()) / (host.stats().rq_active_.value() + 1);
+  }
+  HostConstSharedPtr unweightedHostPick(const HostVector& hosts_to_use,
+                                        const HostsSource& source) override;
+};
+
+/**
  * Random load balancer that picks a random host out of all hosts.
  */
 class RandomLoadBalancer : public LoadBalancer, ZoneAwareLoadBalancerBase {

@@ -325,6 +325,9 @@ ClusterInfoImpl::ClusterInfoImpl(const envoy::api::v2::Cluster& config,
   case envoy::api::v2::Cluster::LEAST_REQUEST:
     lb_type_ = LoadBalancerType::LeastRequest;
     break;
+  case envoy::api::v2::Cluster::LEAST_REQUEST_FULL:
+    lb_type_ = LoadBalancerType::LeastRequestFull;
+    break;
   case envoy::api::v2::Cluster::RANDOM:
     lb_type_ = LoadBalancerType::Random;
     break;

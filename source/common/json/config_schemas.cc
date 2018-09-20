@@ -1469,7 +1469,7 @@ const std::string Json::Schema::CLUSTER_SCHEMA(R"EOF(
       },
       "lb_type" : {
         "type" : "string",
-        "enum" : ["round_robin", "least_request", "random", "ring_hash", "original_dst_lb"]
+        "enum" : ["round_robin", "least_request", "least_request_full", "random", "ring_hash", "original_dst_lb"]
       },
       "ring_hash_lb_config" : {
         "type" : "object",

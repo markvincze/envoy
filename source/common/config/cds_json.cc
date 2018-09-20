@@ -160,6 +160,8 @@ void CdsJson::translateCluster(const Json::Object& json_cluster,
     cluster.set_lb_policy(envoy::api::v2::Cluster::ROUND_ROBIN);
   } else if (lb_type == "least_request") {
     cluster.set_lb_policy(envoy::api::v2::Cluster::LEAST_REQUEST);
+  } else if (lb_type == "least_request_full") {
+    cluster.set_lb_policy(envoy::api::v2::Cluster::LEAST_REQUEST_FULL);
   } else if (lb_type == "random") {
     cluster.set_lb_policy(envoy::api::v2::Cluster::RANDOM);
   } else if (lb_type == "original_dst_lb") {

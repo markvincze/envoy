@@ -1,5 +1,6 @@
 #include "common/upstream/load_balancer_impl.h"
 
+#include <algorithm>
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -8,6 +9,7 @@
 #include "envoy/upstream/upstream.h"
 
 #include "common/common/assert.h"
+#include "common/common/logger.h"
 #include "common/protobuf/utility.h"
 
 namespace Envoy {
@@ -511,6 +513,14 @@ HostConstSharedPtr LeastRequestLoadBalancer::unweightedHostPick(const HostVector
   } else {
     return host2;
   }
+}
+
+HostConstSharedPtr LeastRequestFullLoadBalancer::unweightedHostPick(const HostVector& hosts_to_use,
+                                                                    const HostsSource&) {
+  return *std::min_element(
+    hosts_to_use.begin(),
+    hosts_to_use.end(),
+    [](const HostSharedPtr& a, const HostSharedPtr& b) { return a->stats().rq_active_.value() < b->stats().rq_active_.value(); });
 }
 
 HostConstSharedPtr RandomLoadBalancer::chooseHost(LoadBalancerContext*) {

@@ -1044,6 +1044,13 @@ ClusterManagerImpl::ThreadLocalClusterManagerImpl::ClusterEntry::ClusterEntry(
                                              parent.parent_.random_, cluster->lbConfig()));
       break;
     }
+    case LoadBalancerType::LeastRequestFull: {
+      ASSERT(lb_factory_ == nullptr);
+      lb_.reset(new LeastRequestFullLoadBalancer(priority_set_, parent_.local_priority_set_,
+                                                 cluster->stats(), parent.parent_.runtime_,
+                                                 parent.parent_.random_, cluster->lbConfig()));
+      break;
+    }
     case LoadBalancerType::Random: {
       ASSERT(lb_factory_ == nullptr);
       lb_.reset(new RandomLoadBalancer(priority_set_, parent_.local_priority_set_, cluster->stats(),
